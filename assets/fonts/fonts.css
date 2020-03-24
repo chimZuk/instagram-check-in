@@ -1,0 +1,68 @@
+@font-face {
+    font-family: 'helveticaneueregular';
+    src: url('helvetica-webfont.woff2') format('woff2'),
+         url('helvetica-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'helveticaneuebold';
+    src: url('helveticabold-webfont.woff2') format('woff2'),
+         url('helveticabold-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'helveticaneueitalic';
+    src: url('helveticaitalic-webfont.woff2') format('woff2'),
+         url('helveticaitalic-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'helveticaneuelight';
+    src: url('helveticalight-webfont.woff2') format('woff2'),
+         url('helveticalight-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'helveticaneuemedium';
+    src: url('helveticamedium-webfont.woff2') format('woff2'),
+         url('helveticamedium-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'helveticaneuethin';
+    src: url('helveticathin-webfont.woff2') format('woff2'),
+         url('helveticathin-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
