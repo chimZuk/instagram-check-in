@@ -27,9 +27,17 @@ function on_container_scroll() {
         var percentage = (diff_percentage < -0.20 || diff_percentage > 0.20) ? (0.2 / diff_percentage) : 1;
         cards[i].style.opacity = Math.abs(percentage);
     }
+    setPercentage();
+}
 
-    progress_percentage = document.getElementById("container").scrollTop / (document.getElementById("container").scrollHeight - document.getElementById("container").clientHeight);
-    document.getElementById("progress").style.right = (document.getElementById("container").scrollWidth - (document.getElementById("container").scrollWidth * progress_percentage)) + "px";
+function setPercentage(val = null) {
+    if (val == null) {
+        progress_percentage = document.getElementById("container").scrollTop / (document.getElementById("container").scrollHeight - document.getElementById("container").clientHeight);
+        document.getElementById("progress").style.right = (document.getElementById("container").scrollWidth - (document.getElementById("container").scrollWidth * progress_percentage)) + "px";
+    } else {
+        progress_percentage = val;
+        document.getElementById("progress").style.right = (document.getElementById("container").scrollWidth - (document.getElementById("container").scrollWidth * progress_percentage)) + "px";
+    }
 }
 
 function switch_incognito(value) {
@@ -83,6 +91,7 @@ function get_submissions() {
             var result = JSON.parse(http.responseText);
             current_submissions = result.data;
             toggle_loading(false);
+            setPercentage(0);
             document.getElementById("container").scrollTop = 0;
             container.innerHTML = submissions_view();
         }
@@ -192,6 +201,7 @@ function router(name, sup_data = null) {
     switch (name) {
         case "home": {
             is_submitting = sup_data;
+            setPercentage(0);
             document.getElementById("container").scrollTop = 0;
             container.innerHTML = home_view();
             break;
