@@ -124,3 +124,16 @@ a {
     cursor: pointer;
     padding-bottom: 9px;
 }
+
+.feed-date {
+    font-size: 20px;
+    font-style: italic;
+    cursor: default;
+}
+
+.feed-content {
+    text-align: center;
+    font-size: 35px;
+    padding: 0px 20px;
+    cursor: default;
+}

@@ -2,11 +2,14 @@ var container = document.getElementById("container");
 var loading = document.getElementById("loading");
 
 var progress_percentage = 0;
+var current_submissions = [];
 var current_data = {
     nickname: "",
     incognito: false,
     content: ""
 }
+var is_submitting = false;
+var is_submitted = false;
 
 function toggle_loading(state) {
     state ? loading.style.display = "block" : loading.style.display = "none";
@@ -40,39 +43,79 @@ function update_field(field, value) {
 }
 
 function form_submission() {
+    toggle_loading(true);
 
+    var data = current_data;
+
+    const http = new XMLHttpRequest();
+    const url = 'https://photos.chimzuk.com/api/feedback.submit';
+
+    http.open("POST", url, true);
+    http.setRequestHeader("Content-type", "application/json");
+    http.send(JSON.stringify(data));
+
+    http.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            var result = JSON.parse(http.responseText);
+            current_submissions = result.data;
+            toggle_loading(false);
+            router("submissions", true);
+        }
+    }
+    return false;
 }
 
-function submission_view() {
-    return `
+
+function get_submissions() {
+    toggle_loading(true);
+
+    var data = current_data;
+
+    const http = new XMLHttpRequest();
+    const url = 'https://photos.chimzuk.com/api/feedback.get';
+
+    http.open("POST", url, true);
+    http.setRequestHeader("Content-type", "application/json");
+    http.send(JSON.stringify(data));
+
+    http.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            var result = JSON.parse(http.responseText);
+            current_submissions = result.data;
+            toggle_loading(false);
+            document.getElementById("container").scrollTop = 0;
+            container.innerHTML = submissions_view();
+        }
+    }
+    return false;
+}
+
+function open_insta(nick) {
+    window.open(`https://instagram.com/${nick}`);
+}
+
+function submissions_view() {
+    var result = is_submitted ? `
         <div class="card">
-            <h1>Thank you for Your feedback!</h1>
+            <h1>Thank you for Your feedback!<br>Scroll down to see other thoughts!</h1>
             <p class="emoji">😉</p>
         </div>
-    `;
+    ` : ``;
+    for (var i = current_submissions.length - 1; i > -1; i--) {
+        result += `
+            <div class="card">
+                <h1 class="feed-nick" ${!current_submissions[i].incognito ? `onclick="open_insta('${current_submissions[i].nickname}')" style="cursor: pointer;"` : ""}>@${current_submissions[i].nickname} ${current_submissions[i].incognito ? "🕵️‍♂️" : "🥰"}</h1>
+                <p class="feed-date">${current_submissions[i].date}</p>
+                <p class="feed-content">${current_submissions[i].content}</p>
+                <a onclick="router('home', true)" style="margin-top: 20px; cursor: pointer; font-size: 20px; font-weight: bold; letter-spacing: 1px;">Leave a feedback 😁</a>
+            </div>
+        `;
+    }
+    return result;
 }
 
 function home_view() {
-    return `
-        <div class="card">
-            <h1>Bring it on! 🙃</h1>
-            <form class="form-element">
-                <div class="input-block">
-                    <span class="placeholder-element">@</span>
-                    <input class="input-element stylish" id="nickname-input" type="text" name="nickname" placeholder="nickname" onchange="update_field('nickname', this.value)"></input>
-                </div>
-                <div class="input-block" style="margin-top: 5px;">
-                    <input class="sub-margin" type="checkbox" id="anon-check" name="anonymous" onchange="switch_incognito(this.checked)">
-                    <label for="anon-check" style="user-select: none; cursor: pointer;">Lemme stay Incognito 😎</label>
-                </div>
-                <div class="input-block margin">
-                    <textarea class="input-element" id="ideas-input" name="ideas" placeholder="whatever you'd like to say" onchange="update_field('content', this.value)"></textarea>
-                </div>
-                <div class="input-block flex margin">
-                    <button class="button-element" id="submit-form">Give it a shot🧐</button>
-                </div>
-            </form>
-        </div>
+    result = !is_submitting ? `
         <div class="card">
             <h1>Hey Bud!</h1>
             <p class="emoji">😉</p>
@@ -117,16 +160,48 @@ function home_view() {
             <h1>As well as feature all ideas in my Instagram Stories!</h1>
             <p class="emoji">🤩</p>
         </div>
+        ` : ``;
+
+    result += `
+        <div class="card">
+            <h1>Bring it on! 🙃</h1>
+            <form class="form-element">
+                <div class="input-block">
+                    <span class="placeholder-element">@</span>
+                    <input class="input-element stylish" id="nickname-input" type="text" name="nickname" placeholder="nickname" onchange="update_field('nickname', this.value)"></input>
+                </div>
+                <div class="input-block" style="margin-top: 5px;">
+                    <input class="sub-margin" type="checkbox" id="anon-check" name="anonymous" onchange="switch_incognito(this.checked)">
+                    <label for="anon-check" style="user-select: none; cursor: pointer;">Lemme stay Incognito 😎</label>
+                </div>
+                <div class="input-block margin">
+                    <textarea class="input-element" id="ideas-input" name="ideas" placeholder="whatever you'd like to say" onchange="update_field('content', this.value)"></textarea>
+                </div>
+                <div class="input-block flex margin">
+                    <button class="button-element" type="button" id="submit-form" onclick="form_submission();">Give it a shot🧐</button>
+                </div>
+            </form>
+            <a onclick="router('submissions', false)" style="margin-top: 10px; cursor: pointer; font-size: 20px; font-weight: bold; letter-spacing: 1px;">See feedback of other's 🤭</a>
+        </div>
     `;
+
+    return result;
 }
 
 function router(name, sup_data = null) {
     switch (name) {
         case "home": {
+            is_submitting = sup_data;
+            document.getElementById("container").scrollTop = 0;
             container.innerHTML = home_view();
+            break;
+        }
+        case "submissions": {
+            is_submitted = sup_data;
+            get_submissions();
             break;
         }
     }
 }
 
-router("home");
+router("home", false);
