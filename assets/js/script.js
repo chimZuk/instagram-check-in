@@ -51,26 +51,33 @@ function update_field(field, value) {
 }
 
 function form_submission() {
-    toggle_loading(true);
+    if (current_data.content != "") {
+        toggle_loading(true);
 
-    var data = current_data;
-
-    const http = new XMLHttpRequest();
-    const url = 'https://photos.chimzuk.com/api/feedback.submit';
-
-    http.open("POST", url, true);
-    http.setRequestHeader("Content-type", "application/json");
-    http.send(JSON.stringify(data));
-
-    http.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            var result = JSON.parse(http.responseText);
-            current_submissions = result.data;
-            toggle_loading(false);
-            router("submissions", true);
+        if (current_data.nickname == "") {
+            current_data.incognito = true;
         }
+
+        var data = current_data;
+
+        const http = new XMLHttpRequest();
+        const url = 'https://photos.chimzuk.com/api/feedback.submit';
+
+        http.open("POST", url, true);
+        http.setRequestHeader("Content-type", "application/json");
+        http.send(JSON.stringify(data));
+
+        http.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var result = JSON.parse(http.responseText);
+                current_submissions = result.data;
+                toggle_loading(false);
+                router("submissions", true);
+            }
+        }
+        return false;
     }
-    return false;
+
 }
 
 
