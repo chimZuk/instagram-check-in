@@ -19,8 +19,29 @@ function on_container_scroll() {
     }
 }
 
+function switch_incognito(value) {
+    document.getElementById("nickname-input").disabled = value;
+    document.getElementById("nickname-input").value = "";
+}
+
 function home_view() {
     return `
+        <div class="card">
+            <h1>Bring it on! 🙃</h1>
+            <form class="form-element">
+                <div class="input-block">
+                    <span class="placeholder-element">@</span>
+                    <input class="input-element stylish" id="nickname-input" type="text" name="nickname" placeholder="nickname"></input>
+                </div>
+                <div class="input-block">
+                    <input class="sub-margin" type="checkbox" id="anon-check" name="anonymous" onchange="switch_incognito(this.checked)">
+                    <label for="anon-check" style="user-select: none; cursor: pointer;">Lemme stay Incognito 😎</label>
+                </div>
+                <div class="input-block margin">
+                    <textarea class="input-element" id="ideas-input" name="ideas" placeholder="you ideas"></textarea>
+                </div>
+            </form>
+        </div>
         <div class="card">
             <h1>Hey Bud!</h1>
             <p class="emoji">😉</p>
@@ -60,15 +81,6 @@ function home_view() {
         <div class="card">
             <h1>As well as feature all ideas in my Instagram Stories!</h1>
             <p class="emoji">🤩</p>
-        </div>
-        <div class="card">
-            <h1>Bring it on! 🙃</h1>
-            <form>
-                <div class="input-block">
-                    <span class="at-element">@</span>
-                    <input type="text" name="nickname" placeholder="nickname"></input>
-                </div
-            </form>
         </div>
     `;
 }

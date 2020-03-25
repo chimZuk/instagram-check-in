@@ -43,26 +43,55 @@ a {
     font-family: Arial, Helvetica, sans-serif;
 }
 
-.input-block {
-    position: relative;
-    width: 200px;
+.form-element {
+    margin-top: 20px;
+    background-color: #ffffff;
+    border: 0.5px #dbdbdb solid;
+    padding: 20px;
+    border-radius: 3px;
 }
 
-input {
+.input-block {
+    position: relative;
+    width: 250px;
+}
+
+.input-block label {
+    font-size: 20px;
+}
+
+.input-element {
     width: 100%;
+    max-width: 100%;
+    min-width: 100%;
     background: #fafafa;
     border: 0.5px #dbdbdb solid;
     border-radius: 3px;
     padding: 7px 14px;
-    padding-left: 30px;
     font-size: 20px;
     outline: none;
 }
 
-.at-element {
+.stylish {
+    padding-left: 30px;
+}
+
+.margin {
+    margin-top: 5px;
+}
+
+.input-element:disabled {
+    opacity: 0.7;
+}
+
+.placeholder-element {
     position: absolute;
-    top: 7px;
+    top: 6px;
     left: 6px;
     font-size: 25px;
     color: #7d7d7d;
+}
+
+.sub-margin {
+    margin-left: 5px;
 }
