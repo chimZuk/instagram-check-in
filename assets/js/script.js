@@ -7,8 +7,23 @@ function toggle_loading(state) {
 
 function home_view() {
     return `
-        <div class="card welcome-block">
-            <h1>Hey Bud!</h1>   
+        <div class="card">
+            <h1>Hey Bud! <span class="emoji">😉</span></h1>   
+        </div>
+        <div class="card">
+            <h1>What's you see here <span class="emoji">😏</span>...</h1>   
+        </div>
+        <div class="card">
+            <h1>And experiencing <span class="emoji">🤤</span>...</h1>   
+        </div>
+        <div class="card">
+            <h1>Is in fact <span class="emoji">🤔</span>..</h1>   
+        </div>
+        <div class="card">
+            <h1>Nothing that serious, LOL <span class="emoji">😅</span></h1>   
+        </div>
+        <div class="card">
+            <h1>Just leave me some ideas for a "Swipe Up" page <span class="emoji">🤑</span></h1>   
         </div>
     `;
 }
