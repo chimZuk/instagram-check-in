@@ -19,8 +19,6 @@ function on_container_scroll() {
         card_boundaries_percentage_string += percentage + "\n";
         cards[i].style.opacity = Math.abs(percentage);
     }
-
-    console.log(card_boundaries_percentage_string)
 }
 
 function home_view() {
