@@ -1,5 +1,9 @@
 var container = document.getElementById("container");
 var loading = document.getElementById("loading");
+var progress = document.getElementById("progress");
+
+var error_max = "Error: 300 characters max 😈";
+var error_min = "Error: at least 3 characters 😈";
 
 var progress_percentage = 0;
 var current_submissions = [];
@@ -15,8 +19,20 @@ function toggle_loading(state) {
     state ? loading.style.display = "block" : loading.style.display = "none";
 }
 
+function set_error(error = null) {
+    var form_error = document.getElementById("form-error");
+
+    if (error != null) {
+        form_error.innerHTML = error;
+        form_error.style.display = "block";
+    } else {
+        form_error.innerHTML = "";
+        form_error.style.display = "none";
+    }
+}
+
 function on_container_scroll() {
-    var container_boundaries = document.getElementById("container").getBoundingClientRect();
+    var container_boundaries = container.getBoundingClientRect();
     var container_height = container_boundaries.bottom - container_boundaries.top;
     var cards = document.getElementsByClassName("card");
 
@@ -32,11 +48,11 @@ function on_container_scroll() {
 
 function setPercentage(val = null) {
     if (val == null) {
-        progress_percentage = document.getElementById("container").scrollTop / (document.getElementById("container").scrollHeight - document.getElementById("container").clientHeight);
-        document.getElementById("progress").style.right = (document.getElementById("container").scrollWidth - (document.getElementById("container").scrollWidth * progress_percentage)) + "px";
+        progress_percentage = container.scrollTop / (container.scrollHeight - container.clientHeight);
+        progress.style.right = (container.scrollWidth - (container.scrollWidth * progress_percentage)) + "px";
     } else {
         progress_percentage = val;
-        document.getElementById("progress").style.right = (document.getElementById("container").scrollWidth - (document.getElementById("container").scrollWidth * progress_percentage)) + "px";
+        progress.style.right = (container.scrollWidth - (container.scrollWidth * progress_percentage)) + "px";
     }
 }
 
@@ -51,7 +67,7 @@ function update_field(field, value) {
 }
 
 function form_submission() {
-    if (current_data.content != "" && current_data.content.length <= 140) {
+    if (current_data.content.length >= 3 && current_data.content.length <= 300) {
         toggle_loading(true);
 
         if (current_data.nickname == "") {
@@ -76,15 +92,16 @@ function form_submission() {
             }
         }
         return false;
+    } else {
+        current_data.content.length < 3 ? set_error(error_min) : set_error(error_max + ` (${current_data.content.length})`);
     }
 
 }
 
-
 function get_submissions() {
     toggle_loading(true);
 
-    var data = current_data;
+    var data = {};
 
     const http = new XMLHttpRequest();
     const url = 'https://photos.chimzuk.com/api/feedback.get';
@@ -99,7 +116,7 @@ function get_submissions() {
             current_submissions = result.data;
             toggle_loading(false);
             setPercentage(0);
-            document.getElementById("container").scrollTop = 0;
+            container.scrollTop = 0;
             container.innerHTML = submissions_view();
         }
     }
@@ -193,6 +210,7 @@ function home_view() {
                 <div class="input-block margin">
                     <textarea class="input-element" id="ideas-input" name="ideas" placeholder="whatever you'd like to say" onchange="update_field('content', this.value)"></textarea>
                 </div>
+                <p class="error" id="form-error"></p>
                 <div class="input-block flex margin">
                     <button class="button-element" type="button" id="submit-form" onclick="form_submission();">Give it a shot🧐</button>
                 </div>
@@ -209,7 +227,7 @@ function router(name, sup_data = null) {
         case "home": {
             is_submitting = sup_data;
             setPercentage(0);
-            document.getElementById("container").scrollTop = 0;
+            container.scrollTop = 0;
             container.innerHTML = home_view();
             break;
         }

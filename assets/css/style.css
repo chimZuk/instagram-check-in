@@ -113,6 +113,10 @@ a {
     margin-left: 5px;
 }
 
+#ideas-input {
+    max-height: 400px;
+}
+
 .button-element {
     border-radius: 3px;
     font-size: 20px;
@@ -140,4 +144,10 @@ a {
     font-size: 35px;
     padding: 0px 10px;
     cursor: default;
+}
+
+.error {
+    margin-left: 5px;
+    font-size: 15px;
+    color: red;
 }
