@@ -51,7 +51,7 @@ function update_field(field, value) {
 }
 
 function form_submission() {
-    if (current_data.content != "") {
+    if (current_data.content != "" && current_data.content.length <= 140) {
         toggle_loading(true);
 
         if (current_data.nickname == "") {
