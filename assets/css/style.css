@@ -45,6 +45,7 @@ a {
 .card p.emoji {
     font-size: 50px;
     margin-top: 10px;
+    user-select: none;
 }
 
 .emoji {
@@ -100,6 +101,7 @@ a {
 }
 
 .placeholder-element {
+    user-select: none;
     position: absolute;
     top: 6px;
     left: 6px;
@@ -126,12 +128,14 @@ a {
 }
 
 .feed-date {
+    user-select: none;
     font-size: 20px;
     font-style: italic;
     cursor: default;
 }
 
 .feed-content {
+    user-select: none;
     text-align: center;
     font-size: 35px;
     padding: 0px 10px;
