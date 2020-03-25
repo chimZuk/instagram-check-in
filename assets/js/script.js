@@ -6,7 +6,12 @@ function toggle_loading(state) {
 }
 
 function home_view() {
-    return "<h3>Hey bud!</h3>";
+    return `
+        <div class="card welcome-block">
+            <h1>Hey Bud!</h1>
+            <a>Click Here to Check-In</a>
+        </div>
+    `;
 }
 
 function router(name, sup_data = null) {

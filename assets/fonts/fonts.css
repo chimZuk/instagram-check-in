@@ -7,9 +7,6 @@
 
 }
 
-
-
-
 @font-face {
     font-family: 'helveticaneuebold';
     src: url('helveticabold-webfont.woff2') format('woff2'),
@@ -18,9 +15,6 @@
     font-style: normal;
 
 }
-
-
-
 
 @font-face {
     font-family: 'helveticaneueitalic';
@@ -31,9 +25,6 @@
 
 }
 
-
-
-
 @font-face {
     font-family: 'helveticaneuelight';
     src: url('helveticalight-webfont.woff2') format('woff2'),
@@ -43,9 +34,6 @@
 
 }
 
-
-
-
 @font-face {
     font-family: 'helveticaneuemedium';
     src: url('helveticamedium-webfont.woff2') format('woff2'),
@@ -54,9 +42,6 @@
     font-style: normal;
 
 }
-
-
-
 
 @font-face {
     font-family: 'helveticaneuethin';
