@@ -1,5 +1,6 @@
 * {
     font-family: "helveticaneueregular";
+    font-size: 30px;
     color: #262626;
     margin: 0;
 }
@@ -30,6 +31,7 @@ a {
 
 .card h1 {
     text-align: center;
+    user-select: none;
 }
 
 .card p.emoji {
@@ -39,4 +41,28 @@ a {
 
 .emoji {
     font-family: Arial, Helvetica, sans-serif;
+}
+
+.input-block {
+    position: relative;
+    width: 200px;
+}
+
+input {
+    width: 100%;
+    background: #fafafa;
+    border: 0.5px #dbdbdb solid;
+    border-radius: 3px;
+    padding: 7px 14px;
+    padding-left: 30px;
+    font-size: 20px;
+    outline: none;
+}
+
+.at-element {
+    position: absolute;
+    top: 7px;
+    left: 6px;
+    font-size: 25px;
+    color: #7d7d7d;
 }
