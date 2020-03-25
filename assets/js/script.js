@@ -8,8 +8,7 @@ function toggle_loading(state) {
 function home_view() {
     return `
         <div class="card welcome-block">
-            <h1>Hey Bud!</h1>
-            <a>Click Here to Check-In</a>
+            <h1>Hey Bud!</h1>   
         </div>
     `;
 }
